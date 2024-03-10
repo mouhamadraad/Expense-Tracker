@@ -44,10 +44,10 @@ function generateID() {
 function addTransactionDOM(transaction) {
   const sign = transaction.amount < 0 ? "-" : "+";
   const item = document.createElement("li");
-  const { list } = elements;
+const { list } = elements;
 
   item.classList.add(transaction.amount < 0 ? "minus" : "plus");
-  item.innerHTML = `${transaction.text} <span>${sign}${Math.abs(transaction.amount)}</span> <button class="delete-btn" onclick="removeTransaction(${transaction.id})">x</button>`;
+item.innerHTML = `${transaction.text} <span>${sign}${Math.abs(transaction.amount)}</span> <button class="delete-btn" onclick="removeTransaction(${transaction.id})">x</button>`;
 
   list.appendChild(item);
 }
@@ -79,12 +79,62 @@ function Init() {
   updateValues();
 }
 
+function fetchCurrencies() {
+  fetch('https://ivory-ostrich-yoke.cyclic.app/students/available')
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Failed to fetch currencies');
+      }
+    })
+    .then(data => {
+      console.log('Available currencies:', data);
+    
+    })
+    .catch(error => {
+      console.error('Error fetching currencies:', error.message);
+    });
+}
+
+function performCurrencyConversion() {
+  const postData = {
+    from: 'USD',  
+    to: 'EUR',    
+    amount: 100   
+  };
+
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(postData)
+  };
+
+  fetch('https://ivory-ostrich-yoke.cyclic.app/students/convert', options)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Failed to convert currency');
+      }
+    })
+    .then(data => {
+      console.log('Conversion result:', data);
+    
+    })
+.catch(error => {
+      console.error('Error converting currency:', error.message);
+    });
+}
+
+
 Init();
+
+
 elements.form.addEventListener('submit', addTransaction);
 
 
-
-
-
-
-
+fetchCurrencies();
+performCurrencyConversion();
