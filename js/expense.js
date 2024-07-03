@@ -80,7 +80,7 @@ function Init() {
 }
 
 function fetchCurrencies() {
-  fetch('https://ivory-ostrich-yoke.cyclic.app/students/available')
+  fetch('https://rich-erin-angler-hem.cyclic.app/students/available')
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -112,7 +112,7 @@ function performCurrencyConversion() {
     body: JSON.stringify(postData)
   };
 
-  fetch('https://ivory-ostrich-yoke.cyclic.app/students/convert', options)
+  fetch('https://rich-erin-angler-hem.cyclic.app/students/available', options)
     .then(response => {
       if (response.ok) {
         return response.json();
